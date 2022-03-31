@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { createGlobalStyle } from "styled-components";
+import Form from "./Form";
 import Footer from "./Footer";
 import leftImage from "./images/left-image.jpeg";
 import rightImage from "./images/right-image.jpeg";
@@ -53,7 +54,7 @@ const LogoImg = styled.img`
 
 const Liner = styled.div`
   width: 157px;
-  margin: 30px auto 0;
+  margin: 30px auto;
   border: 10px solid #db545a;
 `;
 
@@ -68,6 +69,7 @@ function App() {
             <LogoImg src={logoImage} />
           </a>
           <Liner />
+          <Form />
         </Main>
         <RightImage />
       </Container>
