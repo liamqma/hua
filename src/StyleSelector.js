@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import img1 from "./images/1.jpeg";
 import img2 from "./images/2.jpeg";
 import img3 from "./images/3.jpeg";

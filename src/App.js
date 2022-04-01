@@ -1,23 +1,11 @@
 import React from "react";
-import styled, { createGlobalStyle } from "styled-components";
+import styled from "@emotion/styled";
+import { Global, css } from "@emotion/react";
 import Form from "./Form";
 import Footer from "./Footer";
 import leftImage from "./images/left-image.jpeg";
 import rightImage from "./images/right-image.jpeg";
 import logoImage from "./images/logo.png";
-
-const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-    font-family: 'Open Sans',sans-serif;
-    background-color: #333333;
-  }
-
-  *, *:before, *:after {
-    box-sizing: border-box;
-  }
-  
-`;
 
 const Container = styled.section`
   @media (min-width: 768px) {
@@ -61,7 +49,21 @@ const Liner = styled.div`
 function App() {
   return (
     <>
-      <GlobalStyle />
+      <Global
+        styles={css`
+          body {
+            margin: 0;
+            font-family: "Open Sans", sans-serif;
+            background-color: #333333;
+          }
+
+          *,
+          *:before,
+          *:after {
+            box-sizing: border-box;
+          }
+        `}
+      />
       <Container>
         <LeftImage />
         <Main>

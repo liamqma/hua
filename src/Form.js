@@ -1,6 +1,10 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState, createRef } from "react";
+import styled from "@emotion/styled";
 import StyleSelector from "./StyleSelector";
+import { Stage, Button, Input, Textarea, Select } from "./common.styles";
+import Stage1 from "./Stage1";
+import Stage2 from "./Stage2";
+import Stage3 from "./Stage3";
 
 const Container = styled.div`
   color: #111111;
@@ -8,89 +12,43 @@ const Container = styled.div`
   font-weight: 100;
 `;
 
-const Term = styled.p`
-  font-size: 30px;
-  line-height: 50px;
-`;
-
-const Stage = styled.section`
-  padding-top: 30px;
-  margin-top: 46px;
-  border-top: 1px solid black;
-`;
-
-const Button = styled.button`
-  border: 2px solid black;
-  padding: 10px 30px;
-  color: #454545;
-  font-weight: 700;
-  background-color: white;
-  cursor: pointer;
-  width: 200px;
-  margin: 0.5em auto;
-  display: block;
-`;
-
-const Input = styled.input`
-  border: 2px solid black;
-  padding: 10px;
-  color: #454545;
-  font-weight: 700;
-  background-color: white;
-  margin: 0.5em auto;
-  width: 200px;
-  display: block;
-`;
-
-const Textarea = styled.textarea`
-  border: 2px solid black;
-  padding: 10px;
-  color: #454545;
-  font-weight: 700;
-  background-color: white;
-  margin: 0.5em auto;
-  width: 80%;
-  display: block;
-`;
-
-const Select = styled.select`
-  border: 2px solid black;
-  padding: 10px;
-  color: #454545;
-  font-weight: 700;
-  background-color: white;
-  margin: 0.5em auto;
-  width: 200px;
-  display: block;
-`;
-
 function Form() {
-  const [stage, setStage] = useState(0);
-  const goToNextStage = () => setStage(stage + 1);
+  const [postcode, setPostcode] = useState();
+  const [suburb, setSuburb] = useState();
+  const [arrangement, setArrangement] = useState("");
+
+  const [stage, setStage] = useState(3);
+  const stage2Ref = createRef();
+  const stage3Ref = createRef();
+  const stage4Ref = createRef();
+
+  const goToNextStage = (nextStage, element) => {
+    setStage(nextStage);
+    setTimeout(() => {
+      element.scrollIntoView({ behavior: "smooth" });
+    }, 0);
+  };
   return (
     <Container>
-      <Term>
-        Flowers are subject to seasonal availability, please trust us to make
-        selection on your behalf…
-      </Term>
-      <Button onClick={goToNextStage}>Accept</Button>
-      <Stage hidden={stage < 1}>
-        <p>
-          Our delivery service includes a limited area of Sydney. please enter
-          your recipient's suburb:
-        </p>
-        <Input type="text" placeholder="suburb" />
-        <Button onClick={goToNextStage}>Continue</Button>
-      </Stage>
-      <Stage hidden={stage < 2}>
-        <p>Select arrangement</p>
-        <Select>
-          <option>One variety</option>
-          <option>Mixed Arrangements</option>
-          <option>Potted Orchid Plant</option>
-        </Select>
-      </Stage>
-      <Stage hidden={stage < 3}>
+      <Stage1
+        stage={stage}
+        goToNextStage={() => goToNextStage(2, stage2Ref.current)}
+      />
+      <Stage2
+        setPostcode={setPostcode}
+        setSuburb={setSuburb}
+        ref={stage2Ref}
+        stage={stage}
+        goToNextStage={() => goToNextStage(3, stage3Ref.current)}
+      />
+      <Stage3
+        arrangement={arrangement}
+        setArrangement={setArrangement}
+        ref={stage3Ref}
+        stage={stage}
+        goToNextStage={() => goToNextStage(4, stage4Ref.current)}
+      />
+      <Stage hidden={stage < 4}>
         <p>Please select up to four images to shape your arrangement:</p>
         <StyleSelector />
         <p>or brief the artist (100 characters limit)</p>
@@ -98,7 +56,7 @@ function Form() {
         <Button>Skip</Button>
         <Button>Continue</Button>
       </Stage>
-      <Stage hidden={stage < 4}>
+      <Stage hidden={stage < 5}>
         <p>Budget</p>
         <Select>
           <option>80</option>
@@ -121,7 +79,7 @@ function Form() {
         </Select>
         <Button>Continue</Button>
       </Stage>
-      <Stage hidden={stage < 5}>
+      <Stage hidden={stage < 6}>
         <p>Recipient</p>
         <Select>
           <option>Residential</option>
