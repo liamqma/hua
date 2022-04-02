@@ -32,7 +32,7 @@ function Form() {
   const [deliveryTime, setDeliveryTime] = useState("");
   const [specialInstructions, setSpecialInstructions] = useState("");
 
-  const [stage, setStage] = useState(7);
+  const [stage, setStage] = useState(0);
   const stage2Ref = createRef();
   const stage3Ref = createRef();
   const stage4Ref = createRef();
