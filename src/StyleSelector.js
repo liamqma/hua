@@ -42,6 +42,14 @@ const CellImage = styled.div`
 `;
 
 function StyleSelector({ images, setImages }) {
+  const onImageClick = (index) => {
+    if (images.includes(index)) {
+      setImages(images.filter((i) => i !== index));
+    } else {
+      setImages([...images, index]);
+    }
+  };
+
   return (
     <div>
       {imgs.map((image, index) => {
@@ -51,7 +59,7 @@ function StyleSelector({ images, setImages }) {
               key={index}
               style={{ backgroundImage: `url(${image})` }}
               selected={images.includes(index)}
-              onClick={() => setImages([...new Set([...images, index])])}
+              onClick={() => onImageClick(index)}
             ></CellImage>
           </Cell>
         );
