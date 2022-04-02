@@ -43,7 +43,8 @@ function Form() {
   const goToNextStage = (nextStage, element) => {
     if (nextStage > stage) setStage(nextStage);
     setTimeout(() => {
-      element.scrollIntoView({ behavior: "smooth" });
+      const y = element.getBoundingClientRect().top + window.pageYOffset - 40;
+      window.scrollTo({ top: y, behavior: "smooth" });
     }, 0);
   };
   return (
