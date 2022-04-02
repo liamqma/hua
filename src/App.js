@@ -1,8 +1,10 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { Global, css } from "@emotion/react";
+import { Routes, Route } from "react-router-dom";
 import Form from "./Form";
 import Footer from "./Footer";
+import { PaymentReturn } from "./Payment";
 import leftImage from "./images/left-image.jpeg";
 import rightImage from "./images/right-image.jpeg";
 import logoImage from "./images/logo.png";
@@ -75,7 +77,10 @@ function App() {
             <LogoImg src={logoImage} />
           </a>
           <Liner />
-          <Form />
+          <Routes>
+            <Route path="/" element={<Form />} />
+            <Route path="/payment-return" element={<PaymentReturn />} />
+          </Routes>
         </Main>
         <RightImage />
       </Container>
