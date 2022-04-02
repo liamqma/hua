@@ -1,10 +1,12 @@
 import React, { useState, createRef } from "react";
 import styled from "@emotion/styled";
-import StyleSelector from "./StyleSelector";
-import { Stage, Button, Input, Textarea, Select } from "./common.styles";
 import Stage1 from "./Stage1";
 import Stage2 from "./Stage2";
 import Stage3 from "./Stage3";
+import Stage4 from "./Stage4";
+import Stage5 from "./Stage5";
+import Stage6 from "./Stage6";
+import Stage7 from "./Stage7";
 
 const Container = styled.div`
   color: #111111;
@@ -13,17 +15,33 @@ const Container = styled.div`
 `;
 
 function Form() {
-  const [postcode, setPostcode] = useState();
-  const [suburb, setSuburb] = useState();
+  const [postcode, setPostcode] = useState("");
+  const [suburb, setSuburb] = useState("");
   const [arrangement, setArrangement] = useState("");
+  const [images, setImages] = useState([]);
+  const [brief, setBrief] = useState("");
+  const [budget, setBudget] = useState("");
+  const [presentation, setPresentation] = useState("");
+  const [deliveryLocation, setDeliveryLocation] = useState("");
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [businessName, setBusinessName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
+  const [deliveryDate, setDeliveryDate] = useState(new Date());
+  const [deliveryTime, setDeliveryTime] = useState("");
+  const [specialInstructions, setSpecialInstructions] = useState("");
 
-  const [stage, setStage] = useState(3);
+  const [stage, setStage] = useState(7);
   const stage2Ref = createRef();
   const stage3Ref = createRef();
   const stage4Ref = createRef();
+  const stage5Ref = createRef();
+  const stage6Ref = createRef();
+  const stage7Ref = createRef();
 
   const goToNextStage = (nextStage, element) => {
-    setStage(nextStage);
+    if (nextStage > stage) setStage(nextStage);
     setTimeout(() => {
       element.scrollIntoView({ behavior: "smooth" });
     }, 0);
@@ -48,52 +66,70 @@ function Form() {
         stage={stage}
         goToNextStage={() => goToNextStage(4, stage4Ref.current)}
       />
-      <Stage hidden={stage < 4}>
-        <p>Please select up to four images to shape your arrangement:</p>
-        <StyleSelector />
-        <p>or brief the artist (100 characters limit)</p>
-        <Textarea placeholder="Tell us what you would like" />
-        <Button>Skip</Button>
-        <Button>Continue</Button>
-      </Stage>
-      <Stage hidden={stage < 5}>
-        <p>Budget</p>
-        <Select>
-          <option>80</option>
-          <option>100</option>
-          <option>150</option>
-          <option>200</option>
-          <option>250</option>
-          <option>300</option>
-        </Select>
-        <p>Presentation</p>
-        <Select>
-          <option>
-            Signature Grandiflora architectural tracing paper - No Charge
-          </option>
-          <option>Vase - $35</option>
-          <option>
-            Self contained water box wrapped in Signature Grandiflora
-            architectural tracing paper - $15
-          </option>
-        </Select>
-        <Button>Continue</Button>
-      </Stage>
-      <Stage hidden={stage < 6}>
-        <p>Recipient</p>
-        <Select>
-          <option>Residential</option>
-          <option>Business</option>
-          <option>Hospital</option>
-          <option>University</option>
-        </Select>
-        <Input type="text" placeholder="Name" />
-        <Input type="text" placeholder="Address" />
-        <Input type="text" disabled value="2000" placeholder="suburb" />
-        <Input type="text" placeholder="Phone Number" />
-      </Stage>
+      <Stage4
+        images={images}
+        setImages={setImages}
+        brief={brief}
+        setBrief={setBrief}
+        ref={stage4Ref}
+        stage={stage}
+        goToNextStage={() => goToNextStage(5, stage5Ref.current)}
+      />
+      <Stage5
+        budget={budget}
+        setBudget={setBudget}
+        presentation={presentation}
+        setPresentation={setPresentation}
+        ref={stage5Ref}
+        stage={stage}
+        goToNextStage={() => goToNextStage(6, stage6Ref.current)}
+      />
+      <Stage6
+        stage={stage}
+        ref={stage6Ref}
+        postcode={postcode}
+        suburb={suburb}
+        deliveryLocation={deliveryLocation}
+        setDeliveryLocation={setDeliveryLocation}
+        name={name}
+        setName={setName}
+        address={address}
+        setAddress={setAddress}
+        businessName={businessName}
+        setBusinessName={setBusinessName}
+        phone={phone}
+        setPhone={setPhone}
+        message={message}
+        setMessage={setMessage}
+        deliveryDate={deliveryDate}
+        setDeliveryDate={setDeliveryDate}
+        deliveryTime={deliveryTime}
+        setDeliveryTime={setDeliveryTime}
+        specialInstructions={specialInstructions}
+        setSpecialInstructions={setSpecialInstructions}
+        goToNextStage={() => goToNextStage(7, stage7Ref.current)}
+      />
+      <Stage7
+        stage={stage}
+        ref={stage7Ref}
+        arrangement={arrangement}
+        images={images}
+        brief={brief}
+        budget={budget}
+        presentation={presentation}
+        deliveryLocation={deliveryLocation}
+        name={name}
+        address={address}
+        businessName={businessName}
+        phone={phone}
+        postcode={postcode}
+        suburb={suburb}
+        message={message}
+        deliveryDate={deliveryDate}
+        deliveryTime={deliveryTime}
+        specialInstructions={specialInstructions}
+      />
     </Container>
   );
 }
-
 export default Form;

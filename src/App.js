@@ -62,6 +62,10 @@ function App() {
           *:after {
             box-sizing: border-box;
           }
+
+          .react-calendar {
+            margin: 0 auto;
+          }
         `}
       />
       <Container>

@@ -2,7 +2,7 @@ import React, { forwardRef } from "react";
 import { Stage, Select } from "./common.styles";
 
 function Stage3({ stage, goToNextStage, arrangement, setArrangement }, ref) {
-  const defaultText = "Please select";
+  const defaultText = "Please choose...";
 
   const handleChange = (event) => {
     setArrangement(event.target.value);

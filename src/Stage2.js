@@ -73,8 +73,8 @@ function Stage2({ stage, goToNextStage, setPostcode, setSuburb }, ref) {
     );
     if (found.length) {
       setIsValid(true);
-      setPostcode(found.postcode);
-      setSuburb(found.name);
+      setPostcode(found[0].postcode);
+      setSuburb(found[0].name);
       goToNextStage();
     } else {
       setIsValid(false);
