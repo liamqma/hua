@@ -51,6 +51,7 @@ function Stage7(
     deliveryDate,
     deliveryTime,
     specialInstructions,
+    goToNextStage,
   },
   ref
 ) {
@@ -141,7 +142,7 @@ function Stage7(
           ) : null}
         </tbody>
       </Table>
-      <Button>Checkout</Button>
+      <Button onClick={goToNextStage}>Checkout</Button>
     </Stage>
   );
 }

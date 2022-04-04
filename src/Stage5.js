@@ -6,9 +6,9 @@ function Stage5(
   ref
 ) {
   const onButtonClick = () => {
-    if (budget === "0") {
+    if (!budget || budget === "Please choose...") {
       alert("Please select a budget point before continuing.");
-    } else if (presentation === "0") {
+    } else if (!presentation || presentation === "Please choose...") {
       alert("Please select a presentation option before continuing.");
     } else {
       goToNextStage();
@@ -21,7 +21,7 @@ function Stage5(
         value={budget}
         onChange={(event) => setBudget(event.target.value)}
       >
-        <option value="0">Please choose...</option>
+        <option>Please choose...</option>
         <option>80</option>
         <option>100</option>
         <option>150</option>
@@ -34,12 +34,12 @@ function Stage5(
         value={presentation}
         onChange={(event) => setPresentation(event.target.value)}
       >
-        <option value="0">Please choose...</option>
-        <option>
+        <option>Please choose...</option>
+        <option value="0">
           Signature Grandiflora architectural tracing paper - No Charge
         </option>
-        <option>Vase - $35</option>
-        <option>
+        <option value="35">Vase - $35</option>
+        <option value="15">
           Self contained water box wrapped in Signature Grandiflora
           architectural tracing paper - $15
         </option>

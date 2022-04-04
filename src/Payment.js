@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
 import { loadStripe } from "@stripe/stripe-js";
+import plantLoadingIcon from "./images/plant-loading-icon.gif";
 import {
   PaymentElement,
   useStripe,
   useElements,
   Elements,
 } from "@stripe/react-stripe-js";
+import { Button as SiteButton } from "./common.styles";
 
 const PaymentMessage = styled.div`
   color: rgb(105, 115, 134);
@@ -109,6 +111,7 @@ function CheckoutForm() {
 
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [showThankYouMessage, setShowThankYouMessage] = useState(false);
 
   useEffect(() => {
     if (!stripe) {
@@ -126,7 +129,7 @@ function CheckoutForm() {
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
       switch (paymentIntent.status) {
         case "succeeded":
-          setMessage("Payment succeeded!");
+          setShowThankYouMessage(true);
           break;
         case "processing":
           setMessage("Your payment is processing.");
@@ -174,6 +177,8 @@ function CheckoutForm() {
     setIsLoading(false);
   };
 
+  if (showThankYouMessage) return <p>Thank you for your order.</p>;
+
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement />
@@ -186,19 +191,86 @@ function CheckoutForm() {
   );
 }
 
-function Payment() {
+function Payment({
+  goBack,
+  arrangement,
+  images,
+  brief,
+  budget,
+  presentation,
+  deliveryLocation,
+  name,
+  address,
+  businessName,
+  phone,
+  postcode,
+  suburb,
+  message,
+  deliveryDate,
+  deliveryTime,
+  specialInstructions,
+}) {
   const [clientSecret, setClientSecret] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
+    setIsError(false);
     // Create PaymentIntent as soon as the page loads
-    fetch("http://localhost:4242/create-payment-intent", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount: 100 }),
-    })
+    fetch(
+      "https://us-central1-flower-shop-api.cloudfunctions.net/app/create-payment-intent",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          arrangement,
+          images: images.join(","),
+          brief,
+          amount: (parseInt(budget) + parseInt(presentation)) * 100,
+          deliveryLocation,
+          name,
+          address,
+          businessName,
+          phone,
+          postcode,
+          suburb,
+          message,
+          deliveryDate: `${deliveryDate.getDate()}-${
+            deliveryDate.getMonth() + 1
+          }-${deliveryDate.getFullYear()}`,
+          deliveryTime,
+          specialInstructions,
+        }),
+      }
+    )
       .then((res) => res.json())
-      .then((data) => setClientSecret(data.clientSecret));
-  }, []);
+      .then((data) => {
+        setIsLoading(false);
+        setClientSecret(data.clientSecret);
+      })
+      .catch(() => {
+        setIsLoading(false);
+        setIsError(true);
+      });
+  }, [
+    address,
+    arrangement,
+    brief,
+    budget,
+    businessName,
+    deliveryDate,
+    deliveryLocation,
+    deliveryTime,
+    images,
+    message,
+    name,
+    phone,
+    postcode,
+    presentation,
+    specialInstructions,
+    suburb,
+  ]);
 
   const appearance = {
     theme: "stripe",
@@ -207,6 +279,16 @@ function Payment() {
     clientSecret,
     appearance,
   };
+
+  if (isLoading) return <img alt="loading..." src={plantLoadingIcon} />;
+
+  if (isError)
+    return (
+      <>
+        <p>Sorry, something went wrong.</p>
+        <SiteButton onClick={goBack}>Go back</SiteButton>
+      </>
+    );
 
   return (
     clientSecret && (

@@ -53,7 +53,25 @@ function Form() {
   return (
     <Container>
       {stage === 8 ? (
-        <Payment />
+        <Payment
+          goBack={() => setStage(7)}
+          arrangement={arrangement}
+          images={images}
+          brief={brief}
+          budget={budget}
+          presentation={presentation}
+          deliveryLocation={deliveryLocation}
+          name={name}
+          address={address}
+          businessName={businessName}
+          phone={phone}
+          postcode={postcode}
+          suburb={suburb}
+          message={message}
+          deliveryDate={deliveryDate}
+          deliveryTime={deliveryTime}
+          specialInstructions={specialInstructions}
+        />
       ) : (
         <>
           {" "}
