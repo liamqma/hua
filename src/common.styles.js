@@ -9,6 +9,7 @@ const common = `
   width: 200px;
   margin: 0.5em auto;
   display: block;
+  -webkit-appearance: none;
 `;
 
 export const Stage = styled.section`
