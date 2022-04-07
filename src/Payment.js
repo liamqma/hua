@@ -105,13 +105,14 @@ const Spinner = styled.div`
 
 const stripePromise = loadStripe("pk_test_Kf7AMqlAGeUrs9p2ARVXT6hp");
 
-function CheckoutForm() {
+function CheckoutForm({ isReturnURL = false }) {
   const stripe = useStripe();
   const elements = useElements();
 
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showThankYouMessage, setShowThankYouMessage] = useState(false);
+  const [pIntent, setPIntent] = useState(null);
 
   useEffect(() => {
     if (!stripe) {
@@ -127,6 +128,7 @@ function CheckoutForm() {
     }
 
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+      setPIntent(paymentIntent);
       switch (paymentIntent.status) {
         case "succeeded":
           setShowThankYouMessage(true);
@@ -177,7 +179,16 @@ function CheckoutForm() {
     setIsLoading(false);
   };
 
-  if (showThankYouMessage) return <p>Thank you for your order.</p>;
+  if (!pIntent && isReturnURL)
+    return <img alt="loading..." src={plantLoadingIcon} />;
+
+  if (showThankYouMessage)
+    return (
+      <>
+        <p>Thank you for your order.</p>
+        <p>Order ID: {pIntent.id}</p>
+      </>
+    );
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
@@ -316,7 +327,7 @@ export function PaymentReturn() {
 
   return (
     <Elements options={options} stripe={stripePromise}>
-      <CheckoutForm />
+      <CheckoutForm isReturnURL={true} />
     </Elements>
   );
 }
