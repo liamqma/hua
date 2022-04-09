@@ -1,8 +1,24 @@
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
+import { getDatabase, ref, child, get } from "firebase/database";
 import styled from "@emotion/styled";
 import Calendar from "react-calendar";
+import differenceInDays from "date-fns/differenceInDays";
+import isSunday from "date-fns/isSunday";
+import formatISO from "date-fns/formatISO";
+
+import "./firebase";
 import { Stage, Select, Input, Textarea, Button } from "./common.styles";
 import "react-calendar/dist/Calendar.css";
+
+let disabledDates;
+get(child(ref(getDatabase()), "items")).then((snapshot) => {
+  if (snapshot.exists()) {
+    const items = snapshot.val();
+    if (items) {
+      disabledDates = Object.keys(items);
+    }
+  }
+});
 
 const P = styled.p`
   margin-top: 45px;
@@ -37,6 +53,7 @@ function Stage6(
   },
   ref
 ) {
+  const today = new Date();
   return (
     <Stage hidden={stage < 6}>
       <p ref={ref}>Recipient</p>
@@ -92,7 +109,18 @@ function Stage6(
         placeholder="Enter here"
       />
       <P>Delivery date</P>
-      <Calendar onChange={setDeliveryDate} value={deliveryDate} />
+      <Calendar
+        calendarType="US"
+        onChange={setDeliveryDate}
+        tileDisabled={({ date }) => {
+          if (isSunday(date)) return true;
+          if (differenceInDays(date, today) < 7) return true;
+          const dateString = formatISO(date, { representation: "date" });
+          if (disabledDates && disabledDates.includes(dateString)) return true;
+          return false;
+        }}
+        value={deliveryDate}
+      />
       <P>Delivery time</P>
       <Select
         value={deliveryTime}
