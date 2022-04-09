@@ -23,6 +23,8 @@ function Stage6(
     setBusinessName,
     phone,
     setPhone,
+    email,
+    setEmail,
     message,
     setMessage,
     deliveryDate,
@@ -74,6 +76,12 @@ function Stage6(
         value={phone}
         onChange={(event) => setPhone(event.target.value)}
         placeholder="Phone Number"
+      />
+      <Input
+        type="email"
+        value={email}
+        onChange={(event) => setEmail(event.target.value)}
+        placeholder="Email"
       />
       <P>
         Personal message <br /> (150 characters remaining)

@@ -45,6 +45,7 @@ function Stage7(
     address,
     businessName,
     phone,
+    email,
     postcode,
     suburb,
     message,
@@ -118,6 +119,10 @@ function Stage7(
           <tr>
             <td>Phone</td>
             <td>{phone}</td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td>{email}</td>
           </tr>
           <tr>
             <td>Message</td>

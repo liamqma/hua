@@ -214,6 +214,7 @@ function Payment({
   address,
   businessName,
   phone,
+  email,
   postcode,
   suburb,
   message,
@@ -229,32 +230,30 @@ function Payment({
     setIsLoading(true);
     setIsError(false);
     // Create PaymentIntent as soon as the page loads
-    fetch(
-      "https://us-central1-flower-shop-api.cloudfunctions.net/app/create-payment-intent",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          arrangement,
-          images: images.join(","),
-          brief,
-          amount: (parseInt(budget) + parseInt(presentation)) * 100,
-          deliveryLocation,
-          name,
-          address,
-          businessName,
-          phone,
-          postcode,
-          suburb,
-          message,
-          deliveryDate: `${deliveryDate.getDate()}-${
-            deliveryDate.getMonth() + 1
-          }-${deliveryDate.getFullYear()}`,
-          deliveryTime,
-          specialInstructions,
-        }),
-      }
-    )
+    fetch(`${process.env.REACT_APP_API_URL}/app/create-payment-intent`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        amount: (parseInt(budget) + parseInt(presentation)) * 100,
+        name,
+        email,
+        suburb,
+        address,
+        postcode,
+        phone,
+        arrangement,
+        images: images.join(","),
+        brief,
+        deliveryLocation,
+        businessName,
+        message,
+        deliveryDate: `${deliveryDate.getDate()}-${
+          deliveryDate.getMonth() + 1
+        }-${deliveryDate.getFullYear()}`,
+        deliveryTime,
+        specialInstructions,
+      }),
+    })
       .then((res) => res.json())
       .then((data) => {
         setIsLoading(false);
@@ -281,6 +280,7 @@ function Payment({
     presentation,
     specialInstructions,
     suburb,
+    email,
   ]);
 
   const appearance = {

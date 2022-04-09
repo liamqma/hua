@@ -32,6 +32,7 @@ function Form() {
   const [deliveryDate, setDeliveryDate] = useState(new Date());
   const [deliveryTime, setDeliveryTime] = useState("");
   const [specialInstructions, setSpecialInstructions] = useState("");
+  const [email, setEmail] = useState("");
 
   const [stage, setStage] = useState(0);
   const stage2Ref = createRef();
@@ -62,6 +63,7 @@ function Form() {
           presentation={presentation}
           deliveryLocation={deliveryLocation}
           name={name}
+          email={email}
           address={address}
           businessName={businessName}
           phone={phone}
@@ -124,7 +126,9 @@ function Form() {
             setAddress={setAddress}
             businessName={businessName}
             setBusinessName={setBusinessName}
+            email={email}
             phone={phone}
+            setEmail={setEmail}
             setPhone={setPhone}
             message={message}
             setMessage={setMessage}
@@ -149,6 +153,7 @@ function Form() {
             address={address}
             businessName={businessName}
             phone={phone}
+            email={email}
             postcode={postcode}
             suburb={suburb}
             message={message}
