@@ -114,7 +114,7 @@ function Stage6(
         onChange={setDeliveryDate}
         tileDisabled={({ date }) => {
           if (isSunday(date)) return true;
-          if (differenceInDays(date, today) < 7) return true;
+          if (differenceInDays(date, today) < 3) return true;
           const dateString = formatISO(date, { representation: "date" });
           if (disabledDates && disabledDates.includes(dateString)) return true;
           return false;
