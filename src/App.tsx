@@ -1,8 +1,11 @@
 import styled from "@emotion/styled";
 import { Global, css } from "@emotion/react";
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+import { Routes, Route, useMatch } from "react-router-dom";
 import Form from "./Form";
+import Home from "./Home";
 import Footer from "./Footer";
+import Menu from "./Menu";
 import { PaymentReturn } from "./Payment";
 import leftImage from "./images/left-image.jpeg";
 import rightImage from "./images/right-image.jpeg";
@@ -47,29 +50,24 @@ const Liner = styled.div`
   border: 10px solid #db545a;
 `;
 
-function App() {
+function Application() {
+  if (useMatch('/')) {
+    return <><Menu /><Home /></>
+  }
   return (
     <>
       <Global
         styles={css`
           body {
-            margin: 0;
-            font-family: "Open Sans", sans-serif;
             background-color: #333333;
           }
-
-          *,
-          *:before,
-          *:after {
-            box-sizing: border-box;
-          }
-
           .react-calendar {
             margin: 0 auto;
           }
         `}
       />
       <Container>
+        <Menu />
         <LeftImage />
         <Main>
           <a href="/">
@@ -77,7 +75,7 @@ function App() {
           </a>
           <Liner />
           <Routes>
-            <Route path="/" element={<Form />} />
+            <Route path="/shop" element={<Form />} />
             <Route path="/payment-return" element={<PaymentReturn />} />
           </Routes>
         </Main>
@@ -86,6 +84,24 @@ function App() {
       <Footer />
     </>
   );
+}
+
+function App() {
+  return <BrowserRouter>
+    <Global
+      styles={css`
+      body {
+        margin: 0;
+        font-family: "Open Sans", sans-serif;
+      }
+
+      *,
+      *:before,
+      *:after {
+        box-sizing: border-box;
+      }
+    `}
+    /><Application /></BrowserRouter>
 }
 
 export default App;
