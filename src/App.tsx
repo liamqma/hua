@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Routes, Route, useMatch } from "react-router-dom";
 import Form from "./Form";
 import Home from "./Home";
+import FreshFlowers from "./FreshFlowers";
 import Footer from "./Footer";
 import Menu from "./Menu";
 import { PaymentReturn } from "./Payment";
@@ -75,7 +76,9 @@ function Application() {
           </a>
           <Liner />
           <Routes>
+            <Route path="/fresh-flowers" element={<FreshFlowers />} />
             <Route path="/shop" element={<Form />} />
+            <Route path="/shop/:type" element={<Form />} />
             <Route path="/payment-return" element={<PaymentReturn />} />
           </Routes>
         </Main>

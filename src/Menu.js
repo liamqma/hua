@@ -111,18 +111,18 @@ function Menu() {
       </MenuToggle>
       <UL isOpen={isOpen}>
         <li>
-          Fresh Flowers
+          <a href="/fresh-flowers">Fresh Flowers</a>
           <ul>
             <li>
-              <a href="/luxe-fleur">Luxe Fleur</a>
+              <a href="/shop/luxe-fleur">Luxe Fleur</a>
             </li>
             <li>
-              <a href="/elegant-fleur">Elegant Fleur</a>
+              <a href="/shop/elegant-fleur">Elegant Fleur</a>
             </li>
           </ul>
         </li>
         <li>
-          <a href="/everlasting-flowers">Everlasting Flowers</a>
+          <a href="/shop/everlasting-flowers">Everlasting Flowers</a>
         </li>
         <li>
           <a href="/tutorials">Tutorials</a>
