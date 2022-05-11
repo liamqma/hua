@@ -76,7 +76,6 @@ function Form() {
         />
       ) : (
         <>
-          {" "}
           <Stage1
             stage={stage}
             goToNextStage={() => goToNextStage(2, stage2Ref.current)}

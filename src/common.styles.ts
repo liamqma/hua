@@ -1,5 +1,9 @@
 import styled from "@emotion/styled";
 
+type InputProps = {
+  invalid: boolean
+}
+
 const common = `
   border: 2px solid black;
   padding: 10px;
@@ -25,7 +29,7 @@ export const Button = styled.button`
   opacity: ${(props) => (props.disabled ? 0 : 1)};
 `;
 
-export const Input = styled.input`
+export const Input = styled.input<InputProps>`
   ${common}
   border-color: ${(props) => (props.invalid ? "red" : "black")};
 `;
@@ -37,4 +41,9 @@ export const Textarea = styled.textarea`
 
 export const Select = styled.select`
   ${common}
+`;
+
+export const P = styled.p`
+  font-size: 26px;
+  line-height: 180%;
 `;

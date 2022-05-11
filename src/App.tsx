@@ -6,6 +6,8 @@ import Form from "./Form";
 import Home from "./Home";
 import FreshFlowers from "./FreshFlowers";
 import Footer from "./Footer";
+import Tutorials from "./Tutorials";
+import EventEnquiry from "./EventEnquiry";
 import Menu from "./Menu";
 import { PaymentReturn } from "./Payment";
 import leftImage from "./images/left-image.jpeg";
@@ -80,6 +82,8 @@ function Application() {
             <Route path="/shop" element={<Form />} />
             <Route path="/shop/:type" element={<Form />} />
             <Route path="/payment-return" element={<PaymentReturn />} />
+            <Route path="/tutorials" element={<Tutorials />} />
+            <Route path="/event-enquiry" element={<EventEnquiry />} />
           </Routes>
         </Main>
         <RightImage />

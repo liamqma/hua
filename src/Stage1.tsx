@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "@emotion/styled";
 import { Button } from "./common.styles";
 
@@ -7,13 +6,19 @@ const Term = styled.p`
   line-height: 50px;
 `;
 
-function Stage1({ stage, goToNextStage }) {
+type Props = {
+  stage: number,
+  goToNextStage: () => void
+}
+
+function Stage1({ stage, goToNextStage }: Props) {
   const disabled = stage > 1;
   return (
     <>
       <Term>
-        Flowers are subject to seasonal availability, please trust us to make
-        selection on your behalf…
+        Each season comes with its signature flowers. Please trust us to select
+        the most beautiful blooms in season, and help you to express your
+        thoughts through a unique floral design.
       </Term>
       <Button disabled={disabled} onClick={goToNextStage}>
         Accept

@@ -34,12 +34,12 @@ const A = styled.a`
 `
 
 export function FreshFlowers() {
-    return (
-      <Container>
-        <A href="/shop/luxe-fleur"><img src={leftImage} /><span>Luxe Fleur</span></A>
-        <A href="/shop/elegant-fleur"><img src={rightImage} /><span>Elegant Fleur</span></A>
-      </Container>
-    );
-  }
-  
+  return (
+    <Container>
+      <A href="/shop/luxe-fleur"><img alt="Luxe Fleur" src={leftImage} /><span>Luxe Fleur</span></A>
+      <A href="/shop/elegant-fleur"><img alt="Elegant Fleur" src={rightImage} /><span>Elegant Fleur</span></A>
+    </Container>
+  );
+}
+
 export default FreshFlowers;
