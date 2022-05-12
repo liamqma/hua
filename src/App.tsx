@@ -24,11 +24,14 @@ const Container = styled.section`
 `;
 
 const LeftImage = styled.div`
-  min-height: 529px;
   background-image: url(${leftImage});
   background-position: 50% 50%;
   flex: 0 0 28.33333333%;
   background-size: cover;
+
+  @media (min-width: 768px) {
+    min-height: 529px;
+  }
 `;
 
 const RightImage = styled(LeftImage)`
@@ -39,8 +42,12 @@ const Main = styled.main`
   flex: 0 0 43.33333333%;
   min-width: 43.33333333%;
   text-align: center;
-  padding: 60px 30px;
+  padding: 30px 30px;
   background-color: white;
+
+  @media (min-width: 768px) {
+    padding: 60px 30px;
+  }
 `;
 
 const LogoImg = styled.img`

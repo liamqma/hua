@@ -4,12 +4,17 @@ import styled from "@emotion/styled";
 const MenuToggle = styled.div`
   display: block;
   position: absolute;
-  top: 50px;
-  left: 50px;
+  top: 20px;
+  left: 20px;
   z-index: 2;
   cursor: pointer;
   width: 33px;
   height: 22px;
+
+  @media (min-width: 768px) {
+    top: 50px;
+    left: 50px;
+  }
 
   span {
     display: block;
