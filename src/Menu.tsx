@@ -1,7 +1,11 @@
 import { useState } from "react";
 import styled from "@emotion/styled";
 
-const MenuToggle = styled.div`
+type Props = {
+  isOpen: boolean
+}
+
+const MenuToggle = styled.div<Props>`
   display: block;
   position: absolute;
   top: 20px;
@@ -62,7 +66,7 @@ const MenuToggle = styled.div`
       : ""}
 `;
 
-const UL = styled.ul`
+const UL = styled.ul<Props>`
   position: absolute;
   min-height: 100vh;
   width: 100%;
