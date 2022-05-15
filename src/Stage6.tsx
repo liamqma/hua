@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, ForwardedRef } from "react";
 import { getDatabase, ref, child, get } from "firebase/database";
 import styled from "@emotion/styled";
 import Calendar from "react-calendar";
@@ -10,7 +10,7 @@ import "./firebase";
 import { Stage, Select, Input, Textarea, Button } from "./common.styles";
 import "react-calendar/dist/Calendar.css";
 
-let disabledDates;
+let disabledDates: Array<string>;
 get(child(ref(getDatabase()), "items")).then((snapshot) => {
   if (snapshot.exists()) {
     const items = snapshot.val();
@@ -50,8 +50,33 @@ function Stage6(
     specialInstructions,
     setSpecialInstructions,
     goToNextStage,
+  }: {
+    stage: number,
+    postcode: string,
+    suburb: string,
+    deliveryLocation: string,
+    setDeliveryLocation: (s: string) => void,
+    name: string,
+    setName: (s: string) => void,
+    address: string,
+    setAddress: (s: string) => void,
+    businessName: string,
+    setBusinessName: (s: string) => void,
+    phone: string,
+    setPhone: (s: string) => void,
+    email: string,
+    setEmail: (s: string) => void,
+    message: string,
+    setMessage: (s: string) => void,
+    deliveryDate: Date,
+    setDeliveryDate: (s: Date) => void,
+    deliveryTime: string,
+    setDeliveryTime: (s: string) => void,
+    specialInstructions: string,
+    setSpecialInstructions: (s: string) => void,
+    goToNextStage: () => void,
   },
-  ref
+  ref: ForwardedRef<HTMLParagraphElement>
 ) {
   const today = new Date();
   return (

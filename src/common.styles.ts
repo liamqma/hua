@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 type InputProps = {
-  invalid: boolean
+  invalid?: boolean
 }
 
 const common = `

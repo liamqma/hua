@@ -1,9 +1,16 @@
-import React, { forwardRef } from "react";
+import { forwardRef, ForwardedRef } from "react";
 import { Stage, Button, Select } from "./common.styles";
 
 function Stage5(
-  { stage, budget, setBudget, presentation, setPresentation, goToNextStage },
-  ref
+  { stage, budget, setBudget, presentation, setPresentation, goToNextStage }: {
+    stage: number,
+    budget: string,
+    setBudget: (b: string) => void,
+    presentation: string,
+    setPresentation: (p: string) => void,
+    goToNextStage: () => void
+  },
+  ref: ForwardedRef<HTMLParagraphElement>
 ) {
   const onButtonClick = () => {
     if (!budget || budget === "Please choose...") {

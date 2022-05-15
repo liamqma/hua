@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
 import trimStart from "lodash/trimStart";
 import trimEnd from "lodash/trimEnd";
+import { imgs, img } from "./types";
 
-function importAll(r) {
+function importAll(r: __WebpackModuleApi.RequireContext) {
   return r.keys().map((n) => ({
     name: trimEnd(trimStart(n, "./"), ".webp"),
     path: r(n),
@@ -28,7 +29,11 @@ const Cell = styled.div`
   position: relative;
 `;
 
-const CellImage = styled.div`
+type CellImageProps = {
+  selected: boolean
+}
+
+const CellImage = styled.div<CellImageProps>`
   position: absolute;
   width: 120px;
   height: 120px;
@@ -51,8 +56,8 @@ const CellImage = styled.div`
   ${(props) => props.selected && "border-radius: 50%;"}
 `;
 
-function StyleSelector({ images, setImages, type }) {
-  let imgs;
+function StyleSelector({ images, setImages, type }: { images: imgs, setImages: (imgs: imgs) => void, type: string }) {
+  let imgs: imgs;
   switch (type) {
     case "elegant-fleur":
       imgs = elegantFleurImgs;
@@ -67,7 +72,7 @@ function StyleSelector({ images, setImages, type }) {
       imgs = [];
   }
 
-  const onImageClick = (img) => {
+  const onImageClick = (img: img) => {
     if (images.includes(img)) {
       setImages(images.filter((i) => i !== img));
     } else {

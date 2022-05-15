@@ -1,6 +1,7 @@
-import { forwardRef } from "react";
+import { forwardRef, ForwardedRef } from "react";
 import styled from "@emotion/styled";
 import { Stage, Button } from "./common.styles";
+import { imgs } from "./types";
 
 const Table = styled.table`
   width: 100%;
@@ -43,8 +44,28 @@ function Stage7(
     deliveryTime,
     specialInstructions,
     goToNextStage,
+  }: {
+    stage: number,
+    arrangement: string,
+    images: imgs,
+    brief: string,
+    budget: string,
+    presentation: string,
+    deliveryLocation: string,
+    name: string,
+    address: string,
+    businessName: string,
+    phone: string,
+    email: string,
+    postcode: string,
+    suburb: string,
+    message: string,
+    deliveryDate: Date,
+    deliveryTime: string,
+    specialInstructions: string,
+    goToNextStage: () => void,
   },
-  ref
+  ref: ForwardedRef<HTMLParagraphElement>
 ) {
   return (
     <Stage hidden={stage < 7}>

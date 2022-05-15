@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
-import { loadStripe } from "@stripe/stripe-js";
+import { loadStripe, PaymentIntent, Appearance } from "@stripe/stripe-js";
 import plantLoadingIcon from "./images/plant-loading-icon.gif";
 import {
   PaymentElement,
@@ -10,6 +10,7 @@ import {
   Elements,
 } from "@stripe/react-stripe-js";
 import { Button as SiteButton } from "./common.styles";
+import { imgs } from "./types";
 
 const PaymentMessage = styled.div`
   color: rgb(105, 115, 134);
@@ -109,10 +110,10 @@ function CheckoutForm({ isReturnURL = false }) {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState<string | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [showThankYouMessage, setShowThankYouMessage] = useState(false);
-  const [pIntent, setPIntent] = useState(null);
+  const [pIntent, setPIntent] = useState<PaymentIntent | undefined>(undefined);
 
   useEffect(() => {
     if (!stripe) {
@@ -129,7 +130,7 @@ function CheckoutForm({ isReturnURL = false }) {
 
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
       setPIntent(paymentIntent);
-      switch (paymentIntent.status) {
+      switch (paymentIntent?.status) {
         case "succeeded":
           setShowThankYouMessage(true);
           break;
@@ -146,7 +147,7 @@ function CheckoutForm({ isReturnURL = false }) {
     });
   }, [stripe]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!stripe || !elements) {
@@ -181,6 +182,9 @@ function CheckoutForm({ isReturnURL = false }) {
 
   if (!pIntent && isReturnURL)
     return <img alt="loading..." src={plantLoadingIcon} />;
+
+  if (!pIntent)
+    return <p>Something went wrong.</p>
 
   if (showThankYouMessage)
     return (
@@ -221,6 +225,25 @@ function Payment({
   deliveryDate,
   deliveryTime,
   specialInstructions,
+}: {
+  goBack: () => void,
+  arrangement: string,
+  images: imgs,
+  brief: string,
+  budget: string,
+  presentation: string,
+  deliveryLocation: string,
+  name: string,
+  address: string,
+  businessName: string,
+  phone: string,
+  email: string,
+  postcode: string,
+  suburb: string,
+  message: string,
+  deliveryDate: Date,
+  deliveryTime: string,
+  specialInstructions: string,
 }) {
   const [clientSecret, setClientSecret] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -247,9 +270,8 @@ function Payment({
         deliveryLocation,
         businessName,
         message,
-        deliveryDate: `${deliveryDate.getDate()}-${
-          deliveryDate.getMonth() + 1
-        }-${deliveryDate.getFullYear()}`,
+        deliveryDate: `${deliveryDate.getDate()}-${deliveryDate.getMonth() + 1
+          }-${deliveryDate.getFullYear()}`,
         deliveryTime,
         specialInstructions,
       }),
@@ -283,9 +305,10 @@ function Payment({
     email,
   ]);
 
-  const appearance = {
+  const appearance: Appearance = {
     theme: "stripe",
   };
+
   const options = {
     clientSecret,
     appearance,
@@ -293,7 +316,7 @@ function Payment({
 
   if (isLoading) return <img alt="loading..." src={plantLoadingIcon} />;
 
-  if (isError)
+  if (isError || !clientSecret)
     return (
       <>
         <p>Sorry, something went wrong.</p>
@@ -302,11 +325,9 @@ function Payment({
     );
 
   return (
-    clientSecret && (
-      <Elements options={options} stripe={stripePromise}>
-        <CheckoutForm />
-      </Elements>
-    )
+    <Elements options={options} stripe={stripePromise}>
+      <CheckoutForm />
+    </Elements>
   );
 }
 
@@ -317,7 +338,7 @@ export function PaymentReturn() {
 
   if (!clientSecret) return null;
 
-  const appearance = {
+  const appearance: Appearance = {
     theme: "stripe",
   };
   const options = {

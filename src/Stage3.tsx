@@ -1,10 +1,17 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, ForwardedRef } from "react";
 import { Stage, Select } from "./common.styles";
 
-function Stage3({ stage, goToNextStage, arrangement, setArrangement }, ref) {
+function Stage3({ stage, goToNextStage, arrangement, setArrangement }: {
+  stage: number,
+  goToNextStage: () => void,
+  arrangement: string,
+  setArrangement: (a: string) => void
+},
+  ref: ForwardedRef<HTMLParagraphElement>
+) {
   const defaultText = "Please choose...";
 
-  const handleChange = (event) => {
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setArrangement(event.target.value);
     goToNextStage();
   };

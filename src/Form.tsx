@@ -9,6 +9,7 @@ import Stage5 from "./Stage5";
 import Stage6 from "./Stage6";
 import Stage7 from "./Stage7";
 import Payment from "./Payment";
+import { imgs } from "./types";
 
 const Container = styled.div`
   color: #111111;
@@ -22,7 +23,7 @@ function Form() {
   const [postcode, setPostcode] = useState("");
   const [suburb, setSuburb] = useState("");
   const [arrangement, setArrangement] = useState("");
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState<imgs>([]);
   const [brief, setBrief] = useState("");
   const [budget, setBudget] = useState("");
   const [presentation, setPresentation] = useState("");
@@ -40,16 +41,17 @@ function Form() {
   const [stage, setStage] = useState(0);
 
   const { type } = useParams();
+  if (typeof type !== 'string') return <Navigate to="/fresh-flowers" />;
   if (!TYPES.includes(type)) return <Navigate to="/fresh-flowers" />;
 
-  const stage2Ref = createRef();
-  const stage3Ref = createRef();
-  const stage4Ref = createRef();
-  const stage5Ref = createRef();
-  const stage6Ref = createRef();
-  const stage7Ref = createRef();
+  const stage2Ref = createRef<HTMLParagraphElement>();
+  const stage3Ref = createRef<HTMLParagraphElement>();
+  const stage4Ref = createRef<HTMLParagraphElement>();
+  const stage5Ref = createRef<HTMLParagraphElement>();
+  const stage6Ref = createRef<HTMLParagraphElement>();
+  const stage7Ref = createRef<HTMLParagraphElement>();
 
-  const goToNextStage = (nextStage, element) => {
+  const goToNextStage = (nextStage: number, element: HTMLElement | null) => {
     if (nextStage > stage) setStage(nextStage);
     if (element) {
       setTimeout(() => {
@@ -167,7 +169,7 @@ function Form() {
             deliveryDate={deliveryDate}
             deliveryTime={deliveryTime}
             specialInstructions={specialInstructions}
-            goToNextStage={() => goToNextStage(8)}
+            goToNextStage={() => goToNextStage(8, null)}
           />
         </>
       )}

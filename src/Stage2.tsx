@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from "react";
+import React, { forwardRef, useState, ForwardedRef } from "react";
 import { Stage, Button, Input } from "./common.styles";
 import styled from "@emotion/styled";
 import data from "./suburb.json";
@@ -27,12 +27,12 @@ const UL = styled.ul`
   }
 `;
 
-function Stage2({ stage, goToNextStage, setPostcode, setSuburb }, ref) {
+function Stage2({ stage, goToNextStage, setPostcode, setSuburb }: { stage: number, goToNextStage: () => void, setPostcode: (p: string) => void, setSuburb: (p: string) => void }, ref: ForwardedRef<HTMLParagraphElement>) {
   const [value, setValue] = useState("");
   const [isValid, setIsValid] = useState(true);
-  const [suggestions, setSuggestions] = useState([]);
+  const [suggestions, setSuggestions] = useState<Array<{ name: string, postcode: string }>>([]);
 
-  const onChange = (event) => {
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
     if (event.target.value) {
       setSuggestions(
@@ -48,7 +48,7 @@ function Stage2({ stage, goToNextStage, setPostcode, setSuburb }, ref) {
     }
   };
 
-  const onSuggestionClick = (name) => {
+  const onSuggestionClick = (name: string) => {
     setIsValid(true);
     setValue(name);
     setSuggestions([]);
