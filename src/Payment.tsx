@@ -241,7 +241,7 @@ function Payment({
   postcode: string,
   suburb: string,
   message: string,
-  deliveryDate: Date,
+  deliveryDate: Date | null,
   deliveryTime: string,
   specialInstructions: string,
 }) {
@@ -270,8 +270,8 @@ function Payment({
         deliveryLocation,
         businessName,
         message,
-        deliveryDate: `${deliveryDate.getDate()}-${deliveryDate.getMonth() + 1
-          }-${deliveryDate.getFullYear()}`,
+        deliveryDate: deliveryDate ? `${deliveryDate.getDate()}-${deliveryDate.getMonth() + 1
+          }-${deliveryDate.getFullYear()}` : 'unknown',
         deliveryTime,
         specialInstructions,
       }),

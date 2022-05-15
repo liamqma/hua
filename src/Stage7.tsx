@@ -60,7 +60,7 @@ function Stage7(
     postcode: string,
     suburb: string,
     message: string,
-    deliveryDate: Date,
+    deliveryDate: Date | null,
     deliveryTime: string,
     specialInstructions: string,
     goToNextStage: () => void,
@@ -141,9 +141,7 @@ function Stage7(
           </tr>
           <tr>
             <td>Delivery Date</td>
-            <td>
-              {deliveryDate.getDate()}-{deliveryDate.getMonth() + 1}-
-              {deliveryDate.getFullYear()}
+            <td>{deliveryDate && `${deliveryDate.getDate()}-${deliveryDate.getMonth() + 1}-${deliveryDate.getFullYear()}`}
             </td>
           </tr>
           <tr>

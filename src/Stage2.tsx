@@ -27,7 +27,12 @@ const UL = styled.ul`
   }
 `;
 
-function Stage2({ stage, goToNextStage, setPostcode, setSuburb }: { stage: number, goToNextStage: () => void, setPostcode: (p: string) => void, setSuburb: (p: string) => void }, ref: ForwardedRef<HTMLParagraphElement>) {
+function Stage2({ stage, goToNextStage, setPostcode, setSuburb }: {
+  stage: number,
+  goToNextStage: () => void,
+  setPostcode: (p: string) => void,
+  setSuburb: (p: string) => void
+}, ref: ForwardedRef<HTMLParagraphElement>) {
   const [value, setValue] = useState("");
   const [isValid, setIsValid] = useState(true);
   const [suggestions, setSuggestions] = useState<Array<{ name: string, postcode: string }>>([]);

@@ -68,7 +68,7 @@ function Stage6(
     setEmail: (s: string) => void,
     message: string,
     setMessage: (s: string) => void,
-    deliveryDate: Date,
+    deliveryDate: Date | null,
     setDeliveryDate: (s: Date) => void,
     deliveryTime: string,
     setDeliveryTime: (s: string) => void,
@@ -79,6 +79,31 @@ function Stage6(
   ref: ForwardedRef<HTMLParagraphElement>
 ) {
   const today = new Date();
+
+  const onButtonClick = () => {
+    if (!name) {
+      alert("Please enter name.");
+      return;
+    }
+    if (!address) {
+      alert("Please enter address.");
+      return;
+    }
+    if (!phone) {
+      alert("Please enter phone number.");
+      return;
+    }
+    if (!/^[a-z0-9.]{1,64}@[a-z0-9.]{1,64}$/i.test(email)) {
+      alert("Please enter a valid email.");
+      return;
+    }
+    if (!deliveryDate) {
+      alert("Please choose a delivery date.");
+      return;
+    }
+    goToNextStage();
+  }
+
   return (
     <Stage hidden={stage < 6}>
       <p ref={ref}>Recipient</p>
@@ -166,7 +191,7 @@ function Stage6(
         onChange={(event) => setSpecialInstructions(event.target.value)}
         placeholder="Delivery Instructions or Advice about the recipient"
       />
-      <Button onClick={goToNextStage}>Continue</Button>
+      <Button onClick={onButtonClick}>Continue</Button>
     </Stage>
   );
 }

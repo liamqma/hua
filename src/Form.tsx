@@ -33,12 +33,12 @@ function Form() {
   const [businessName, setBusinessName] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
-  const [deliveryDate, setDeliveryDate] = useState(new Date());
+  const [deliveryDate, setDeliveryDate] = useState<Date | null>(null);
   const [deliveryTime, setDeliveryTime] = useState("");
   const [specialInstructions, setSpecialInstructions] = useState("");
   const [email, setEmail] = useState("");
 
-  const [stage, setStage] = useState(0);
+  const [stage, setStage] = useState(7);
 
   const { type } = useParams();
   if (typeof type !== 'string') return <Navigate to="/fresh-flowers" />;

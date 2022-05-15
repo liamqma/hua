@@ -76,7 +76,11 @@ function StyleSelector({ images, setImages, type }: { images: imgs, setImages: (
     if (images.includes(img)) {
       setImages(images.filter((i) => i !== img));
     } else {
-      setImages([...images, img]);
+      if (images.length >= 4) {
+        alert("Sorry, you cannot select more than four images.");
+      } else {
+        setImages([...images, img]);
+      }
     }
   };
 
