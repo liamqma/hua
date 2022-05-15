@@ -38,7 +38,7 @@ function Form() {
   const [specialInstructions, setSpecialInstructions] = useState("");
   const [email, setEmail] = useState("");
 
-  const [stage, setStage] = useState(7);
+  const [stage, setStage] = useState(0);
 
   const { type } = useParams();
   if (typeof type !== 'string') return <Navigate to="/fresh-flowers" />;
