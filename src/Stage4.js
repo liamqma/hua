@@ -3,7 +3,7 @@ import StyleSelector from "./StyleSelector";
 import { Stage, Button, Textarea } from "./common.styles";
 
 function Stage4(
-  { stage, goToNextStage, images, setImages, brief, setBrief },
+  { stage, goToNextStage, images, setImages, brief, setBrief, type },
   ref
 ) {
   const onButtonClick = () => {
@@ -19,7 +19,7 @@ function Stage4(
       <p ref={ref}>
         Please select up to four images to shape your arrangement:
       </p>
-      <StyleSelector images={images} setImages={setImages} />
+      <StyleSelector images={images} setImages={setImages} type={type} />
       <p>or brief the artist (100 characters limit)</p>
       <Textarea
         value={brief}

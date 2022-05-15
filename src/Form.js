@@ -1,5 +1,6 @@
-import React, { useState, createRef } from "react";
+import { useState, createRef } from "react";
 import styled from "@emotion/styled";
+import { useParams, Navigate } from "react-router-dom";
 import Stage1 from "./Stage1";
 import Stage2 from "./Stage2";
 import Stage3 from "./Stage3";
@@ -14,6 +15,8 @@ const Container = styled.div`
   font-size: 16px;
   font-weight: 100;
 `;
+
+const TYPES = ["luxe-fleur", "elegant-fleur", "everlasting-flowers"];
 
 function Form() {
   const [postcode, setPostcode] = useState("");
@@ -35,6 +38,10 @@ function Form() {
   const [email, setEmail] = useState("");
 
   const [stage, setStage] = useState(0);
+
+  const { type } = useParams();
+  if (!TYPES.includes(type)) return <Navigate to="/fresh-flowers" />;
+
   const stage2Ref = createRef();
   const stage3Ref = createRef();
   const stage4Ref = createRef();
@@ -101,6 +108,7 @@ function Form() {
             setBrief={setBrief}
             ref={stage4Ref}
             stage={stage}
+            type={type}
             goToNextStage={() => goToNextStage(5, stage5Ref.current)}
           />
           <Stage5

@@ -1,15 +1,25 @@
-import React from "react";
 import styled from "@emotion/styled";
-import img1 from "./images/1.jpeg";
-import img2 from "./images/2.jpeg";
-import img3 from "./images/3.jpeg";
-import img4 from "./images/4.jpeg";
-import img5 from "./images/5.jpeg";
-import img6 from "./images/6.jpeg";
-import img7 from "./images/7.jpeg";
-import img8 from "./images/8.jpeg";
+import trimStart from "lodash/trimStart";
+import trimEnd from "lodash/trimEnd";
 
-const imgs = [img1, img2, img3, img4, img5, img6, img7, img8];
+function importAll(r) {
+  return r.keys().map((n) => ({
+    name: trimEnd(trimStart(n, "./"), ".webp"),
+    path: r(n),
+  }));
+}
+
+const elegantFleurImgs = importAll(
+  require.context("./images/elegant-fleur", true, /\.webp$/)
+);
+
+const luxeFleurImgs = importAll(
+  require.context("./images/luxe-fleur", true, /\.webp$/)
+);
+
+const everlastingFlowersImgs = importAll(
+  require.context("./images/everlasting-flowers", true, /\.webp$/)
+);
 
 const Cell = styled.div`
   width: 130px;
@@ -41,25 +51,40 @@ const CellImage = styled.div`
   ${(props) => props.selected && "border-radius: 50%;"}
 `;
 
-function StyleSelector({ images, setImages }) {
-  const onImageClick = (index) => {
-    if (images.includes(index)) {
-      setImages(images.filter((i) => i !== index));
+function StyleSelector({ images, setImages, type }) {
+  let imgs;
+  switch (type) {
+    case "elegant-fleur":
+      imgs = elegantFleurImgs;
+      break;
+    case "luxe-fleur":
+      imgs = luxeFleurImgs;
+      break;
+    case "everlasting-flowers":
+      imgs = everlastingFlowersImgs;
+      break;
+    default:
+      imgs = [];
+  }
+
+  const onImageClick = (img) => {
+    if (images.includes(img)) {
+      setImages(images.filter((i) => i !== img));
     } else {
-      setImages([...images, index]);
+      setImages([...images, img]);
     }
   };
 
   return (
     <div>
-      {imgs.map((image, index) => {
+      {imgs.map((img) => {
         return (
-          <Cell key={index}>
+          <Cell key={img.name}>
             <CellImage
-              key={index}
-              style={{ backgroundImage: `url(${image})` }}
-              selected={images.includes(index)}
-              onClick={() => onImageClick(index)}
+              key={img.name}
+              style={{ backgroundImage: `url(${img.path})` }}
+              selected={images.includes(img)}
+              onClick={() => onImageClick(img)}
             ></CellImage>
           </Cell>
         );

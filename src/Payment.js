@@ -242,7 +242,7 @@ function Payment({
         postcode,
         phone,
         arrangement,
-        images: images.join(","),
+        images: images.map((i) => i.name).join(","),
         brief,
         deliveryLocation,
         businessName,
