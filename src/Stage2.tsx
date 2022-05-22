@@ -60,7 +60,7 @@ function Stage2({ stage, goToNextStage, setPostcode, setSuburb }: {
   };
 
   const SuggestionComponent = suggestions.length ? (
-    <UL>
+    <UL id="suggestions">
       {suggestions.map((suggestion) => (
         <li
           onClick={() => onSuggestionClick(suggestion.name)}

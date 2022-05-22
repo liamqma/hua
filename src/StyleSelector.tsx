@@ -85,11 +85,12 @@ function StyleSelector({ images, setImages, type }: { images: imgs, setImages: (
   };
 
   return (
-    <div>
-      {imgs.map((img) => {
+    <div id="style-selector">
+      {imgs.map((img, index) => {
         return (
           <Cell key={img.name}>
             <CellImage
+              data-test={`style-${index}`}
               key={img.name}
               style={{ backgroundImage: `url(${img.path})` }}
               selected={images.includes(img)}

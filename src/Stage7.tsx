@@ -68,7 +68,7 @@ function Stage7(
   ref: ForwardedRef<HTMLParagraphElement>
 ) {
   return (
-    <Stage hidden={stage < 7}>
+    <Stage id="stage-7" hidden={stage < 7}>
       <p ref={ref}>Please confirm:</p>
       <Table>
         <tbody>

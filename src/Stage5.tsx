@@ -25,6 +25,7 @@ function Stage5(
     <Stage hidden={stage < 5}>
       <p ref={ref}>Budget</p>
       <Select
+        id="budget"
         value={budget}
         onChange={(event) => setBudget(event.target.value)}
       >
@@ -38,6 +39,7 @@ function Stage5(
       </Select>
       <p>Presentation</p>
       <Select
+        id="presentation"
         value={presentation}
         onChange={(event) => setPresentation(event.target.value)}
       >
@@ -51,7 +53,7 @@ function Stage5(
           architectural tracing paper - $15
         </option>
       </Select>
-      <Button onClick={onButtonClick}>Continue</Button>
+      <Button id="continue-stage-5" onClick={onButtonClick}>Continue</Button>
     </Stage>
   );
 }

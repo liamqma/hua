@@ -183,10 +183,7 @@ function CheckoutForm({ isReturnURL = false }) {
   if (!pIntent && isReturnURL)
     return <img alt="loading..." src={plantLoadingIcon} />;
 
-  if (!pIntent)
-    return <p>Something went wrong.</p>
-
-  if (showThankYouMessage)
+  if (showThankYouMessage && pIntent)
     return (
       <>
         <p>Thank you for your order.</p>

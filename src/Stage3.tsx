@@ -19,7 +19,7 @@ function Stage3({ stage, goToNextStage, arrangement, setArrangement }: {
   return (
     <Stage hidden={stage < 3}>
       <p ref={ref}>Select arrangement</p>
-      <Select value={arrangement} onChange={handleChange}>
+      <Select id="arrangement" value={arrangement} onChange={handleChange}>
         <option>{defaultText}</option>
         <option>One variety</option>
         <option>Mixed Arrangements</option>

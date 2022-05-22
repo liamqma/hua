@@ -36,7 +36,7 @@ function Stage4(
         placeholder="Tell us what you would like"
       />
       <Button onClick={onButtonClick}>Skip</Button>
-      <Button onClick={onButtonClick}>Continue</Button>
+      <Button id="continue-stage-4" onClick={onButtonClick}>Continue</Button>
     </Stage>
   );
 }

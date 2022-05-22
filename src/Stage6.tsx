@@ -10,15 +10,23 @@ import "./firebase";
 import { Stage, Select, Input, Textarea, Button } from "./common.styles";
 import "react-calendar/dist/Calendar.css";
 
-let disabledDates: Array<string>;
-get(child(ref(getDatabase()), "items")).then((snapshot) => {
-  if (snapshot.exists()) {
-    const items = snapshot.val();
-    if (items) {
-      disabledDates = Object.keys(items);
-    }
+declare global {
+  interface Window {
+    Cypress?: boolean;
   }
-});
+}
+
+let disabledDates: Array<string>;
+if (!window.Cypress) {
+  get(child(ref(getDatabase()), "items")).then((snapshot) => {
+    if (snapshot.exists()) {
+      const items = snapshot.val();
+      if (items) {
+        disabledDates = Object.keys(items);
+      }
+    }
+  });
+}
 
 const P = styled.p`
   margin-top: 45px;
@@ -108,6 +116,7 @@ function Stage6(
     <Stage hidden={stage < 6}>
       <p ref={ref}>Recipient</p>
       <Select
+        id="delivery-location"
         value={deliveryLocation}
         onChange={(event) => setDeliveryLocation(event.target.value)}
       >
@@ -173,6 +182,7 @@ function Stage6(
       />
       <P>Delivery time</P>
       <Select
+        id="delivery-time"
         value={deliveryTime}
         onChange={(event) => setDeliveryTime(event.target.value)}
       >
@@ -191,7 +201,7 @@ function Stage6(
         onChange={(event) => setSpecialInstructions(event.target.value)}
         placeholder="Delivery Instructions or Advice about the recipient"
       />
-      <Button onClick={onButtonClick}>Continue</Button>
+      <Button id="continue-stage-6" onClick={onButtonClick}>Continue</Button>
     </Stage>
   );
 }

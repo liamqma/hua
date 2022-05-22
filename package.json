@@ -31,7 +31,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "precommit": "tsc"
+    "precommit": "tsc",
+    "cypress": "cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -56,6 +57,7 @@
     "@types/lodash": "^4.14.182",
     "@types/react-calendar": "^3.5.0",
     "@types/webpack-env": "^1.16.4",
+    "cypress": "^9.6.1",
     "husky": "^8.0.1"
   }
 }
