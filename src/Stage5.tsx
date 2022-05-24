@@ -1,6 +1,14 @@
 import { forwardRef, ForwardedRef } from "react";
 import { Stage, Button, Select } from "./common.styles";
 
+export const presentations: {
+  [key: string]: string
+} = {
+  '0': 'Signature Grandiflora architectural tracing paper - No Charge',
+  '35': 'Vase - $35',
+  '15': 'Self contained water box wrapped in Signature Grandiflora architectural tracing paper - $15',
+}
+
 function Stage5(
   { stage, budget, setBudget, presentation, setPresentation, goToNextStage }: {
     stage: number,
@@ -44,14 +52,9 @@ function Stage5(
         onChange={(event) => setPresentation(event.target.value)}
       >
         <option>Please choose...</option>
-        <option value="0">
-          Signature Grandiflora architectural tracing paper - No Charge
-        </option>
-        <option value="35">Vase - $35</option>
-        <option value="15">
-          Self contained water box wrapped in Signature Grandiflora
-          architectural tracing paper - $15
-        </option>
+        {Object.entries(presentations).map(([key, value]) => <option value={key}>{value}</option>
+
+        )}
       </Select>
       <Button id="continue-stage-5" onClick={onButtonClick}>Continue</Button>
     </Stage>

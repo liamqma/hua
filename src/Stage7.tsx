@@ -2,6 +2,7 @@ import { forwardRef, ForwardedRef } from "react";
 import styled from "@emotion/styled";
 import { Stage, Button } from "./common.styles";
 import { imgs } from "./types";
+import { presentations } from "./Stage5";
 
 const Table = styled.table`
   width: 100%;
@@ -99,7 +100,7 @@ function Stage7(
           </tr>
           <tr>
             <td>Presentation</td>
-            <td>{presentation}</td>
+            <td>{presentations[presentation]}</td>
           </tr>
           <tr>
             <td>Delivery Location</td>

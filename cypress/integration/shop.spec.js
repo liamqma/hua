@@ -53,7 +53,7 @@ describe("Flower shop", () => {
     cy.get("#stage-7")
       .should("contain", brief)
       .should("contain", budget)
-      .should("contain", presentation)
+      .should("contain", "Vase - $35")
       .should("contain", deliveryLocation)
       .should("contain", name)
       .should("contain", address)
