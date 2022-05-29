@@ -52,7 +52,7 @@ function Stage5(
         onChange={(event) => setPresentation(event.target.value)}
       >
         <option>Please choose...</option>
-        {Object.entries(presentations).map(([key, value]) => <option value={key}>{value}</option>
+        {Object.entries(presentations).map(([key, value]) => <option key={key} value={key}>{value}</option>
 
         )}
       </Select>

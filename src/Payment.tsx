@@ -106,7 +106,27 @@ const Spinner = styled.div`
 
 const stripePromise = loadStripe("pk_test_Kf7AMqlAGeUrs9p2ARVXT6hp");
 
-function CheckoutForm({ isReturnURL = false }) {
+const Table = styled.table`
+  width: 100%;
+  margin-bottom: 15px;
+  border-bottom: 1px solid black;
+  font-size: 18px;
+  font-weight: bold;
+
+  th, td {
+    padding-bottom: 10px;
+  }
+  
+  th {
+    text-align: left;
+  }
+
+  td {
+    text-align: right;
+  }
+`;
+
+function CheckoutForm({ isReturnURL = false, clientSecret, amount }: { isReturnURL?: boolean, clientSecret?: string, amount?: number }) {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -119,10 +139,6 @@ function CheckoutForm({ isReturnURL = false }) {
     if (!stripe) {
       return;
     }
-
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      "payment_intent_client_secret"
-    );
 
     if (!clientSecret) {
       return;
@@ -145,7 +161,7 @@ function CheckoutForm({ isReturnURL = false }) {
           break;
       }
     });
-  }, [stripe]);
+  }, [stripe, clientSecret]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -180,7 +196,8 @@ function CheckoutForm({ isReturnURL = false }) {
     setIsLoading(false);
   };
 
-  if (!pIntent && isReturnURL)
+  // If it's a returned payment, it should fetch payment intent first.
+  if (isReturnURL && !pIntent)
     return <img alt="loading..." src={plantLoadingIcon} />;
 
   if (showThankYouMessage && pIntent)
@@ -191,15 +208,27 @@ function CheckoutForm({ isReturnURL = false }) {
       </>
     );
 
+  const amountInDollar = (amount || pIntent?.amount || 0) / 100;
+
   return (
-    <form id="payment-form" onSubmit={handleSubmit}>
-      <PaymentElement />
-      <Button disabled={isLoading || !stripe || !elements} id="submit">
-        <span id="button-text">{isLoading ? <Spinner /> : "Pay now"}</span>
-      </Button>
-      {/* Show any error or success messages */}
-      {message && <PaymentMessage>{message}</PaymentMessage>}
-    </form>
+    <>
+      {amountInDollar && <Table>
+        <tbody>
+          <tr>
+            <th>Total:</th>
+            <td>${amountInDollar}</td>
+          </tr>
+        </tbody>
+      </Table>}
+      <form id="payment-form" onSubmit={handleSubmit}>
+        <PaymentElement />
+        <Button disabled={isLoading || !stripe || !elements} id="submit">
+          <span id="button-text">{isLoading ? <Spinner /> : "Pay now"}</span>
+        </Button>
+        {/* Show any error or success messages */}
+        {message && <PaymentMessage>{message}</PaymentMessage>}
+      </form>
+    </>
   );
 }
 
@@ -247,6 +276,7 @@ function Payment({
   const [clientSecret, setClientSecret] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const amount = (parseInt(budget) + parseInt(presentation)) * 100;
 
   useEffect(() => {
     setIsLoading(true);
@@ -256,7 +286,7 @@ function Payment({
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        amount: (parseInt(budget) + parseInt(presentation)) * 100,
+        amount: amount,
         name,
         email,
         suburb,
@@ -303,7 +333,8 @@ function Payment({
     specialInstructions,
     suburb,
     email,
-    type
+    type,
+    amount
   ]);
 
   const appearance: Appearance = {
@@ -327,7 +358,7 @@ function Payment({
 
   return (
     <Elements options={options} stripe={stripePromise}>
-      <CheckoutForm />
+      <CheckoutForm amount={amount} />
     </Elements>
   );
 }
@@ -349,7 +380,7 @@ export function PaymentReturn() {
 
   return (
     <Elements options={options} stripe={stripePromise}>
-      <CheckoutForm isReturnURL={true} />
+      <CheckoutForm isReturnURL={true} clientSecret={clientSecret} />
     </Elements>
   );
 }
