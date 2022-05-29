@@ -35,7 +35,6 @@ function Stage4(
         onChange={(event) => setBrief(event.target.value)}
         placeholder="Tell us what you would like"
       />
-      <Button onClick={onButtonClick}>Skip</Button>
       <Button id="continue-stage-4" onClick={onButtonClick}>Continue</Button>
     </Stage>
   );

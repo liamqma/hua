@@ -222,6 +222,7 @@ function Payment({
   deliveryDate,
   deliveryTime,
   specialInstructions,
+  type,
 }: {
   goBack: () => void,
   arrangement: string,
@@ -241,6 +242,7 @@ function Payment({
   deliveryDate: Date | null,
   deliveryTime: string,
   specialInstructions: string,
+  type: string,
 }) {
   const [clientSecret, setClientSecret] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -271,6 +273,7 @@ function Payment({
           }-${deliveryDate.getFullYear()}` : 'unknown',
         deliveryTime,
         specialInstructions,
+        type
       }),
     })
       .then((res) => res.json())
@@ -300,6 +303,7 @@ function Payment({
     specialInstructions,
     suburb,
     email,
+    type
   ]);
 
   const appearance: Appearance = {

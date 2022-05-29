@@ -82,6 +82,7 @@ function Form() {
           deliveryDate={deliveryDate}
           deliveryTime={deliveryTime}
           specialInstructions={specialInstructions}
+          type={type}
         />
       ) : (
         <>
@@ -170,6 +171,7 @@ function Form() {
             deliveryTime={deliveryTime}
             specialInstructions={specialInstructions}
             goToNextStage={() => goToNextStage(8, null)}
+            type={type}
           />
         </>
       )}

@@ -1,5 +1,6 @@
 import { forwardRef, ForwardedRef } from "react";
 import styled from "@emotion/styled";
+import capitalize from "lodash/capitalize";
 import { Stage, Button } from "./common.styles";
 import { imgs } from "./types";
 import { presentations } from "./Stage5";
@@ -45,6 +46,7 @@ function Stage7(
     deliveryTime,
     specialInstructions,
     goToNextStage,
+    type,
   }: {
     stage: number,
     arrangement: string,
@@ -65,6 +67,7 @@ function Stage7(
     deliveryTime: string,
     specialInstructions: string,
     goToNextStage: () => void,
+    type: string,
   },
   ref: ForwardedRef<HTMLParagraphElement>
 ) {
@@ -74,7 +77,12 @@ function Stage7(
       <Table>
         <tbody>
           <tr>
-            <td colSpan={2}>{arrangement}</td>
+            <td>Type</td>
+            <td>{type.split('-').map(capitalize).join(' ')}</td>
+          </tr>
+          <tr>
+            <td>Arrangement</td>
+            <td>{arrangement}</td>
           </tr>
           {images.length ? (
             <tr>
